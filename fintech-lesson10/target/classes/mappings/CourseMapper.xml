@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ru.tinkoff.fintech.lesson4.dao.CourseRepository">
+
+    <select id="getOldestCourse" resultType="int">
+        SELECT course_id FROM
+            (SELECT AVG(age) AS ages, course_id FROM students GROUP BY course_id ORDER BY ages DESC LIMIT 1);
+    </select>
+
+    <insert id="save" parameterType="ru.tinkoff.fintech.lesson4.model.Course">
+        INSERT INTO courses (courseId, courseName, courseDescription, courseRequiredGrade)
+        VALUES (#{id}, #{name}, #{description}, #{requiredGrade})
+    </insert>
+
+    <select id="findAll" resultMap="CourseMap">
+        SELECT *
+        FROM courses
+    </select>
+
+    <update id="updateCourse" parameterType="ru.tinkoff.fintech.lesson4.model.Course">
+        UPDATE courses SET courseName=#{name},courseDescription=#{description}, courseRequiredGrade=#{requiredGrade} WHERE courseId = #{id};
+    </update>
+
+    <delete id="deleteCourse" parameterType="int">
+        DELETE FROM courses WHERE courseId = #{id};
+    </delete>
+
+    <select id="findById" parameterType="int" resultMap="CourseMap">
+        SELECT * FROM courses WHERE courseId=#{id};
+    </select>
+
+    <resultMap id="CourseMap" type="ru.tinkoff.fintech.lesson4.model.Course">
+        <result property="id" column="courseId"/>
+        <result property="name" column="courseName"/>
+        <result property="description" column="courseDescription"/>
+        <result property="requiredGrade" column="courseRequiredGrade"/>
+    </resultMap>
+</mapper>

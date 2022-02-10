@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tinkoff.java.course.diplom.repository.CafeRepository">
+    <insert id="save" parameterType="tinkoff.java.course.diplom.model.categories.Cafe" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO cafes (name, description, latitude, longShot, startTime, closeTime, price, site, rating, menu)
+        VALUES (#{name}, #{description}, #{latitude}, #{longShot}, #{startTime}, #{closeTime}, #{price}, #{site}, #{rating},
+                #{menu})
+    </insert>
+
+    <select id="findAll" resultMap="CafeMap">
+        SELECT *
+        FROM cafes
+    </select>
+
+    <select id="findAllRated" resultMap="CafeMap">
+        SELECT *
+        FROM cafes ORDER BY rating DESC
+    </select>
+
+    <update id="update" parameterType="tinkoff.java.course.diplom.model.categories.Cafe">
+        UPDATE cafes
+        SET name=#{name},
+            description=#{description},
+            latitude=#{latitude},
+            longShot=#{longShot},
+            startTime=#{startTime},
+            closeTime=#{closeTime},
+            price=#{price},
+            site=#{site},
+            rating=#{rating},
+            menu=#{menu}
+        WHERE id::varchar = #{id};
+    </update>
+
+    <delete id="delete" parameterType="java.util.UUID">
+        DELETE
+        FROM cafes
+        WHERE id::varchar = #{id};
+    </delete>
+
+    <select id="findById" parameterType="java.util.UUID" resultMap="CafeMap">
+        SELECT *
+        FROM cafes
+        WHERE id::varchar = #{id};
+    </select>
+
+    <resultMap id="CafeMap" type="tinkoff.java.course.diplom.model.categories.Cafe" autoMapping="true">
+        <id property="id" column="id"/>
+    </resultMap>
+</mapper>

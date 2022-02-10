@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tinkoff.java.course.diplom.repository.ParkRepository">
+    <insert id="save" parameterType="tinkoff.java.course.diplom.model.categories.Park" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO parks (name, description, latitude, longShot, startTime, closeTime, price, site, rating, sightList)
+        VALUES (#{name}, #{description}, #{latitude}, #{longShot}, #{startTime}, #{closeTime}, #{price}, #{site}, #{rating},
+                #{sightList})
+    </insert>
+
+    <select id="findAll" resultMap="ParkMap">
+        SELECT *
+        FROM parks
+    </select>
+
+    <select id="findAllRated" resultMap="ParkMap">
+        SELECT *
+        FROM parks ORDER BY rating DESC
+    </select>
+
+    <update id="update" parameterType="tinkoff.java.course.diplom.model.categories.Park">
+        UPDATE parks
+        SET name=#{name},
+            description=#{description},
+            latitude=#{latitude},
+            longShot=#{longShot},
+            startTime=#{startTime},
+            closeTime=#{closeTime},
+            price=#{price},
+            site=#{site},
+            rating=#{rating},
+            sightList=#{sightList}
+        WHERE id::varchar = #{id};
+    </update>
+
+    <delete id="delete" parameterType="java.util.UUID">
+        DELETE
+        FROM parks
+        WHERE id::varchar = #{id};
+    </delete>
+
+    <select id="findById" parameterType="java.util.UUID" resultMap="ParkMap">
+        SELECT *
+        FROM parks
+        WHERE id::varchar = #{id};
+    </select>
+
+    <resultMap id="ParkMap" type="tinkoff.java.course.diplom.model.categories.Park" autoMapping="true">
+        <id property="id" column="id"/>
+    </resultMap>
+</mapper>

@@ -1,0 +1,14 @@
+ru\tinkoff\fintech\lesson4\model\StudentsToCourseMapper.class
+ru\tinkoff\fintech\lesson4\dao\CourseRepository.class
+ru\tinkoff\fintech\lesson4\service\CourseService.class
+ru\tinkoff\fintech\lesson4\controller\CourseController.class
+ru\tinkoff\fintech\lesson4\configuration\RestConfiguration.class
+ru\tinkoff\fintech\lesson4\model\Course.class
+ru\tinkoff\fintech\lesson4\controller\StudentController.class
+ru\tinkoff\fintech\lesson4\handler\UuidTypeHandler.class
+ru\tinkoff\fintech\lesson4\service\StudentService.class
+ru\tinkoff\fintech\lesson4\validation\StudentsToCourseMapperConstraint.class
+ru\tinkoff\fintech\lesson4\model\Student.class
+ru\tinkoff\fintech\lesson4\validation\StudentsToCourseMapperValidator.class
+ru\tinkoff\fintech\lesson4\Lesson4Application.class
+ru\tinkoff\fintech\lesson4\dao\StudentRepository.class

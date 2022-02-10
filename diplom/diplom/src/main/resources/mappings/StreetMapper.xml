@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tinkoff.java.course.diplom.repository.StreetRepository">
+    <insert id="save" parameterType="tinkoff.java.course.diplom.model.categories.Street" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO streets (name, description, latitude, longShot, rating, sightList, length)
+        VALUES (#{name}, #{description}, #{latitude}, #{longShot}, #{rating},
+                #{sightList}, #{length})
+    </insert>
+
+    <select id="findAll" resultMap="StreetMap">
+        SELECT *
+        FROM streets
+    </select>
+
+    <select id="findAllRated" resultMap="StreetMap">
+        SELECT *
+        FROM streets ORDER BY rating DESC
+    </select>
+
+    <update id="update" parameterType="tinkoff.java.course.diplom.model.categories.Street">
+        UPDATE streets
+        SET name=#{name},
+            description=#{description},
+            latitude=#{latitude},
+            longShot=#{longShot},
+            rating=#{rating},
+            sightList=#{sightList},
+            length=#{length}
+        WHERE id::varchar = #{id};
+    </update>
+
+    <delete id="delete" parameterType="java.util.UUID">
+        DELETE
+        FROM streets
+        WHERE id::varchar = #{id};
+    </delete>
+
+    <select id="findById" parameterType="java.util.UUID" resultMap="StreetMap">
+        SELECT *
+        FROM streets
+        WHERE id::varchar = #{id};
+    </select>
+
+    <resultMap id="StreetMap" type="tinkoff.java.course.diplom.model.categories.Street" autoMapping="true">
+        <id property="id" column="id"/>
+    </resultMap>
+</mapper>

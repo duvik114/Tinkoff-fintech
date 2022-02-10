@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ru.tinkoff.fintech.lesson4.dao.StudentRepository">
+
+    <update id="addStudentsToCourse" parameterType="ru.tinkoff.fintech.lesson4.model.StudentsToCourseMapper">
+        UPDATE students SET course_id=#{courseId} WHERE id IN
+        <foreach collection="studentIdList" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <insert id="save" parameterType="ru.tinkoff.fintech.lesson4.model.Student">
+        INSERT INTO students (id, name, age, course_id, grade)
+        VALUES (#{id}, #{name}, #{age}, #{course_id}, #{grade})
+    </insert>
+
+    <select id="findAll" resultMap="StudentMap">
+        SELECT *
+        FROM students
+                 INNER JOIN courses ON students.course_id = courses.courseId;
+    </select>
+
+    <select id="findById" parameterType="java.util.UUID" resultType="hashmap">
+        SELECT *
+        FROM (SELECT * FROM students WHERE id = #{id})
+                 INNER JOIN courses ON course_id = courses.courseId;
+    </select>
+
+    <update id="updateStudent" parameterType="ru.tinkoff.fintech.lesson4.model.Student">
+        UPDATE students
+        SET name=#{name},
+            age=#{age},
+            course_id=#{course_id},
+            grade=#{grade}
+        WHERE id = #{id};
+    </update>
+
+    <delete id="deleteStudent" parameterType="java.util.UUID">
+        DELETE
+        FROM students
+        WHERE id = #{id};
+    </delete>
+
+    <resultMap id="StudentMap" type="ru.tinkoff.fintech.lesson4.model.Student" autoMapping="true">
+        <id property="id" column="id"/>
+        <association property="course" javaType="ru.tinkoff.fintech.lesson4.model.Course"
+                     resultMap="CourseMap"/>
+    </resultMap>
+
+    <resultMap id="CourseMap" type="ru.tinkoff.fintech.lesson4.model.Course">
+        <result property="id" column="courseId"/>
+        <result property="name" column="courseName"/>
+        <result property="description" column="courseDescription"/>
+        <result property="requiredGrade" column="courseRequiredGrade"/>
+    </resultMap>
+
+    <!--do automatically-->
+    <!--<resultMap id="StudentMap" type="ru.tinkoff.fintech.lesson4.model.Student$Course"/>-->
+
+</mapper>
