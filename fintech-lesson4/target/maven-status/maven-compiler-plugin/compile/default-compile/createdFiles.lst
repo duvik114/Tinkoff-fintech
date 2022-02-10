@@ -1,0 +1,5 @@
+ru\tinkoff\fintech\lesson4\handler\UuidTypeHandler.class
+ru\tinkoff\fintech\lesson4\service\StudentService.class
+ru\tinkoff\fintech\lesson4\model\Student.class
+ru\tinkoff\fintech\lesson4\Lesson4Application.class
+ru\tinkoff\fintech\lesson4\dao\StudentRepository.class
